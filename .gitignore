@@ -21,6 +21,7 @@ vendor/
 bin/
 dist/
 *.zip
+bootstrap
 
 # Terraform
 .terraform/
