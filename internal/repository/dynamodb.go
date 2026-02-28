@@ -13,7 +13,10 @@ import (
 	"github.com/qianxusheng/fulfillment-service/internal/models"
 )
 
-var ErrOrderAlreadyExists = errors.New("order already exists")
+var (
+	ErrOrderAlreadyExists = errors.New("order already exists")
+	ErrOrderNotFound      = errors.New("order not found")
+)
 
 type DynamoDBRepository struct {
 	client    *dynamodb.Client
@@ -66,7 +69,7 @@ func (r *DynamoDBRepository) GetOrder(ctx context.Context, orderID string) (*mod
 	}
 
 	if result.Item == nil {
-		return nil, fmt.Errorf("order not found: %s", orderID)
+		return nil, ErrOrderNotFound
 	}
 
 	var order models.Order
